@@ -59,14 +59,29 @@ android {
 
     signingConfigs {
         create("keyStore") {
-            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "AdClose.jks"
-            storeFile = file(keystorePath)
-            keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: "rikkati"
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "rikkati"
+            storeFile = file("AdClose.jks")
+            keyAlias = "AdClose"
+            keyPassword = "rikkati"
+            storePassword = "rikkati"
             enableV2Signing = true
             enableV3Signing = true
         }
+    }
+
+    // Resolve signing config: use env vars when set, bundled keystore locally, skip on CI
+    val resolvedSigningConfig: SigningConfig? = if (System.getenv("KEYSTORE_PATH") != null) {
+        signingConfigs.create("ciKeyStore") {
+            storeFile = file(System.getenv("KEYSTORE_PATH"))
+            keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            enableV2Signing = true
+            enableV3Signing = true
+        }
+    } else if (file("AdClose.jks").exists() && System.getenv("CI") == null) {
+        signingConfigs.getByName("keyStore")
+    } else {
+        null
     }
 
     packaging {
@@ -123,8 +138,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("keyStore")
-            
+            if (resolvedSigningConfig != null) {
+                signingConfig = resolvedSigningConfig
+            }
+
             externalNativeBuild {
                 cmake {
                     cppFlags.add("-DDEBUG=0")
@@ -133,8 +150,10 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
-            signingConfig = signingConfigs.getByName("keyStore")
-            
+            if (resolvedSigningConfig != null) {
+                signingConfig = resolvedSigningConfig
+            }
+
             externalNativeBuild {
                 cmake {
                     cppFlags.add("-DDEBUG=1")

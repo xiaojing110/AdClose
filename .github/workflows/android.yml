@@ -41,41 +41,16 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x gradlew
 
-      - name: Decode Keystore
-        env:
-          KEYSTORE_B64: ${{ secrets.SIGN_KEYSTORE_BASE64 }}
-        run: |
-          if [ -n "$KEYSTORE_B64" ]; then
-            echo "$KEYSTORE_B64" | base64 -d > ${{ github.workspace }}/app/AdClose.jks
-            echo "HAS_KEYSTORE=true" >> $GITHUB_ENV
-          else
-            echo "No keystore secret configured, will build debug."
-            echo "HAS_KEYSTORE=false" >> $GITHUB_ENV
-          fi
-
       - name: Build with Gradle
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.SIGN_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
-        run: |
-          if [ "$HAS_KEYSTORE" = "true" ]; then
-            export KEYSTORE_PATH="${{ github.workspace }}/app/AdClose.jks"
-            echo "Building with signing config..."
-            ./gradlew :app:assembleRelease
-          else
-            echo "Building without signing (debug keystore)..."
-            ./gradlew :app:assembleRelease -x :app:validateSigningRelease || \
-            ./gradlew :app:assembleDebug
-          fi
+        run: ./gradlew :app:assembleDebug
 
       - name: Prepare Release ZIP
         run: |
           VERSION=$(grep 'versionName' app/build.gradle.kts | sed 's/.*"\(.*\)".*/\1/')
           mkdir -p release
           # Copy APKs
-          cp app/build/outputs/apk/release/*.apk release/ 2>/dev/null || true
           cp app/build/outputs/apk/debug/*.apk release/ 2>/dev/null || true
+          cp app/build/outputs/apk/release/*.apk release/ 2>/dev/null || true
           # Copy mapping / proguard
           cp -r app/build/outputs/mapping/ release/mapping/ 2>/dev/null || true
           # Create zip
