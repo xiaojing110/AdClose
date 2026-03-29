@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/advanced_settings">
+        <Preference
+            android:icon="@drawable/outline_tune_24"
+            android:key="custom_hook_sdk_ads"
+            android:title="@string/global_title_custom_hook" />
+
+        <Preference
+            android:icon="@drawable/ic_outline_folder_managed_24"
+            android:key="data_manager"
+            android:title="@string/data_manager"
+            android:summary="@string/data_manager_summary" />
+
+        <rikka.preference.SimpleMenuPreference
+            android:key="request_cache_expiration"
+            android:title="@string/request_cache_expiration_title"
+            android:summary="@string/request_cache_expiration_summary"
+            android:entries="@array/cache_expiration_entries"
+            android:entryValues="@array/cache_expiration_values"
+            android:defaultValue="5"
+            android:icon="@drawable/ic_outline_timer_24" />
+
+        <rikka.material.preference.MaterialSwitchPreference
+            android:key="enable_dex_dump"
+            android:title="@string/dex_dump_title"
+            android:summary="@string/dex_dump_summary"
+            android:defaultValue="false"
+            android:icon="@drawable/ic_outline_file_save_24" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_language">
+        <rikka.preference.SimpleMenuPreference
+            android:defaultValue="SYSTEM"
+            android:icon="@drawable/outline_language_24"
+            android:key="language"
+            android:summary="%s"
+            android:title="@string/settings_language" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_theme">
+        <rikka.material.preference.MaterialSwitchPreference
+            android:defaultValue="true"
+            android:disableDependentsState="true"
+            android:icon="@drawable/outline_palette_24"
+            android:key="followSystemAccent"
+            android:summary="@string/settings_system_theme_color"
+            android:title="@string/settings_system_theme_color" />
+        <rikka.preference.SimpleMenuPreference
+            android:defaultValue="DEFAULT"
+            android:dependency="followSystemAccent"
+            android:entries="@array/color_texts"
+            android:entryValues="@array/color_values"
+            android:icon="@drawable/outline_format_color_fill_24"
+            android:key="themeColor"
+            android:summary="%s"
+            android:title="@string/settings_theme_color" />
+        <rikka.preference.SimpleMenuPreference
+            android:defaultValue="-1"
+            android:entries="@array/theme_texts"
+            android:entryValues="@array/theme_values"
+            android:icon="@drawable/outline_dark_mode_24"
+            android:key="darkTheme"
+            android:summary="%s"
+            android:title="@string/dark_theme" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:icon="@drawable/outline_invert_colors_24"
+            android:key="blackDarkTheme"
+            android:summary="@string/settings_pure_black_dark_theme_summary"
+            android:title="@string/settings_pure_black_dark_theme" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/others">
+        <Preference
+            android:icon="@drawable/ic_about"
+            android:key="about"
+            android:title="@string/about" />
+        <rikka.preference.SimpleMenuPreference
+            android:defaultValue="2"
+            android:entries="@array/default_page_texts"
+            android:entryValues="@array/default_page_values"
+            android:icon="@drawable/ic_home_outline"
+            android:key="defaultPage"
+            android:summary="%s"
+            android:title="@string/default_page" />
+        <Preference
+            android:icon="@drawable/ic_clean"
+            android:key="clean"
+            android:title="@string/cache_clean" />
+        <rikka.material.preference.MaterialSwitchPreference
+            android:icon="@drawable/outline_hide_image_24"
+            android:key="hideIcon"
+            android:title="@string/hide_icon" />
+    </PreferenceCategory>
+
+    <Preference android:enabled="false" />
+    <Preference android:enabled="false" />
+
+</PreferenceScreen>

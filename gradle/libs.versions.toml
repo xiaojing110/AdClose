@@ -1,0 +1,66 @@
+[versions]
+kotlin = "2.3.10"
+androidApplicationPlugin = "8.13.2"
+materialThemeBuilder = "1.5.1"
+ksp = "2.3.5"
+autoresconfig = "1.2.2"
+gson = "2.13.2"
+guava = "33.5.0-jre"
+appcenterAnalytics = "5.0.6"
+appcenterCrashes = "5.0.6"
+xposedApi = "82"
+libxposedApi = "101.0.0"
+dexkit = "2.0.7"
+appcompat = "1.7.1"
+preferenceKtx = "1.2.1"
+constraintLayout = "2.2.1"
+recyclerviewSelection = "1.2.0"
+room = "2.8.4"
+lifecycleLiveDataKtx = "2.10.0"
+fragmentKtx = "1.8.9"
+material = "1.13.0"
+about = "2.5.2"
+fastscroll = "1.3.0"
+rikkaMaterial = "2.7.2"
+rikkaMaterialPreference = "2.0.0"
+mpandroidchart = "v3.1.0"
+kotlinxSerialization = "1.10.0"
+kotlinSerializationPlugin = "2.3.10"
+brotli = "0.1.2"
+
+[libraries]
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+xposedApi = { module = "de.robv.android.xposed:api", version.ref = "xposedApi" }
+libxposed-api = { group = "io.github.libxposed", name = "api", version.ref = "libxposedApi" }
+libxposed-service = { group = "io.github.libxposed", name = "service", version.ref = "libxposedApi" }
+libxposed-interface = { group = "io.github.libxposed", name = "interface", version.ref = "libxposedApi" }
+dexkit = { module = "org.luckypray:dexkit", version.ref = "dexkit" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+preferenceKtx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
+constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintLayout" }
+recyclerviewSelection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
+roomRuntime = { module = "androidx.room:room-runtime", version.ref = "room" }
+roomCompiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+roomKtx = { module = "androidx.room:room-ktx", version.ref = "room" }
+lifecycleLiveDataKtx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLiveDataKtx" }
+fragmentKtx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+about = { module = "com.drakeet.about:about", version.ref = "about" }
+fastscroll = { module = "me.zhanghai.android.fastscroll:library", version.ref = "fastscroll" }
+rikkaMaterial = { module = "dev.rikka.rikkax.material:material", version.ref = "rikkaMaterial" }
+rikkaMaterialPreference = { module = "dev.rikka.rikkax.material:material-preference", version.ref = "rikkaMaterialPreference" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+appcenterAnalytics = { module = "com.microsoft.appcenter:appcenter-analytics", version.ref = "appcenterAnalytics" }
+appcenterCrashes = { module = "com.microsoft.appcenter:appcenter-crashes", version.ref = "appcenterCrashes" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchart" }
+kotlinxSerializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+brotli-dec = { group = "org.brotli", name = "dec", version.ref = "brotli" }
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "androidApplicationPlugin" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+materialThemeBuilder = { id = "dev.rikka.tools.materialthemebuilder", version.ref = "materialThemeBuilder" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+autoresconfig = { id = "dev.rikka.tools.autoresconfig", version.ref = "autoresconfig" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerializationPlugin" }

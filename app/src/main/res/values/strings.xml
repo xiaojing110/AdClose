@@ -1,0 +1,307 @@
+<resources>
+    <string name="app_name">AdClose</string>
+    <string name="app_description">Blocks SDK ads and intercepts network requests. Free, for educational purposes only.</string>
+
+    <string name="error_title">An unexpected error occurred.\nSorry for the inconvenience.</string>
+
+    <string name="bottom_item_1">Apps</string>
+    <string name="bottom_item_2">Request</string>
+    <string name="bottom_item_3">Setting</string>
+    <string name="bottom_item_4">Block</string>
+    <string name="bottom_item_5">Home</string>
+
+    <string name="advanced_settings">Advanced</string>
+    <string name="dex_dump_title">DEX Dump</string>
+    <string name="dex_dump_summary">Perform DEX Dump for all hooked apps \nStorage directory: Download/DexKitDump</string>
+    <string name="request_cache_expiration_title">Request Cache Expiration</string>
+    <string name="request_cache_expiration_summary">Set the expiration time for temporary request/response body data \nCurrent: %s</string>
+
+    <string name="data_manager">Data Manager</string>
+    <string name="data_manager_summary">Manage module files and preferences</string>
+    <string name="delete_file_title">Delete File?</string>
+    <string name="delete_prefs_title">Delete Preference Group?</string>
+    <string name="delete_file_message">Are you sure you want to permanently delete the file \"%1$s\"?</string>
+    <string name="delete_prefs_message">Are you sure you want to permanently delete all preferences in the group \"%1$s\"? This cannot be undone.</string>
+    <string name="delete_db_title">Delete Database?</string>
+    <string name="delete_db_message">Are you sure you want to delete the database \"%1$s\"? This action cannot be undone.</string>
+    <string name="action_delete">Delete</string>
+
+    <string name="remove_scope_dialog_title">Remove Scope?</string>
+    <string name="action_remove">Remove</string>
+    <string name="disable_scope_dialog_message">Are you sure you want to disable the module for %s?</string>
+    <string name="remove_scope_dialog_message">All switches for %s are turned off. Do you want to remove this app from the module\'s scope entirely?</string>
+
+    <string name="search_hint">Search</string>
+    <string name="search_hint_with_count">Search %1$d apps</string>
+
+    <string name="sort_filter">Sort and Filter</string>
+    <string name="reset">reset</string>
+    <string name="sort_by">Sort By</string>
+    <string name="reverse">Reverse</string>
+    <string name="filter">Filter</string>
+
+    <string name="tab_user_apps">User Apps</string>
+    <string name="tab_configured_apps">Configured Apps</string>
+    <string name="tab_system_apps">System Apps</string>
+
+    <string name="tab_request_list">Request List</string>
+    <string name="tab_block_list">Block List</string>
+    <string name="tab_pass_list">Pass List</string>
+
+    <string name="export">Export</string>
+    <string name="restore">Import</string>
+
+    <string name="update_checkbox_status">Save</string>
+    <string name="description_two">Enabled to manage web ad request blocking on Request page</string>
+    <string name="description_six">Only for general Root and virtual machine detection</string>
+    <string name="handle_platform_ad">Stop platform ad initialization</string>
+    <string name="check_request">App request checking</string>
+    <string name="native_request_hook">Apply Native request check</string>
+    <string name="description_nine">Capture some network requests of the Native layer, which is relatively unstable.</string>
+
+    <string name="remove_flag_secure">Remove Flag Secure</string>
+    <string name="remove_vpn_state">Remove VPN and system proxy detection</string>
+    <string name="remove_sensor_monitor">Remove acceleration sensor registration</string>
+    <string name="remove_envi_detection">Remove Environment Detection</string>
+    <string name="remove_clipboard">Remove clipboard reading and writing</string>
+    <string name="hook_tip_enable">Enable Hook Tip</string>
+
+    <string name="settings_theme">Theme</string>
+    <string name="settings_system_theme_color_summary">Theme color from system</string>
+    <string name="settings_system_theme_color">System Theme Color</string>
+    <string name="settings_theme_color">Theme Color</string>
+    <string name="dark_theme">Dark Theme</string>
+    <string name="settings_pure_black_dark_theme">Pure Black Dark Theme</string>
+    <string name="settings_pure_black_dark_theme_summary">Use the pure black theme if dark theme is enabled</string>
+    <string name="dark_theme_off">Always Off</string>
+    <string name="dark_theme_on">Always On</string>
+    <string name="follow_system">Follow System</string>
+    <string name="dark_theme_follow_system">@string/follow_system</string>
+
+    <!-- Colors -->
+    <string name="color_default">Default</string>
+    <string name="color_sakura">Sakura</string>
+    <string name="color_red">Red</string>
+    <string name="color_pink">Pink</string>
+    <string name="color_purple">Purple</string>
+    <string name="color_deep_purple">Deep purple</string>
+    <string name="color_indigo">Indigo</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_light_blue">Light blue</string>
+    <string name="color_cyan">Cyan</string>
+    <string name="color_teal">Teal</string>
+    <string name="color_green">Green</string>
+    <string name="color_light_green">Light green</string>
+    <string name="color_lime">Lime</string>
+    <string name="color_yellow">Yellow</string>
+    <string name="color_amber">Amber</string>
+    <string name="color_orange">Orange</string>
+    <string name="color_deep_orange">Deep orange</string>
+    <string name="color_brown">Brown</string>
+    <string name="color_blue_grey">Blue grey</string>
+
+    <string name="none">None</string>
+    <string name="hint_search_hooks">Search Hook Configurations</string>
+
+    <string name="title_custom_hook">Custom Hook</string>
+    <string name="global_title_custom_hook">Global Custom Hook</string>
+    <string name="hook_configs">Hook Configurations</string>
+    <string name="title_global_hook_configs">Global Hook Configurations</string>
+
+    <string name="app_version_format">%1$s (%2$d)</string>
+    <string name="selected_items_count">%d items selected</string>
+    <string name="delete_selected_hooks_title">Delete selected Hooks?</string>
+    <string name="delete_selected_hooks_message">Are you sure you want to delete all selected Hook configurations?</string>
+    <string name="deleted_hooks_count">%d Hooks deleted</string>
+    <string name="hook_configurations_label">Hook Configurations</string>
+    <string name="copied_hooks_count">%d Hooks copied</string>
+    <string name="clear_all_hooks_title">Clear all Hooks?</string>
+    <string name="clear_all_hooks_message">Are you sure you want to clear all Hook configurations? This action cannot be undone.</string>
+    <string name="all_hooks_cleared">All Hooks cleared</string>
+    <string name="empty_hook_configs">No custom Hook configurations yet</string>
+    <string name="hook_added_successfully">Hook added successfully</string>
+    <string name="hook_updated_successfully">Hook updated successfully</string>
+    <string name="delete_hook_title">Delete Hook?</string>
+    <string name="delete_hook_message">Are you sure you want to delete this Hook configuration?</string>
+    <string name="hook_deleted_successfully">Hook deleted successfully</string>
+    <string name="select_valid_hook_method">Please select a valid Hook method</string>
+
+    <string name="add_hook_config_title">Add Hook Configuration</string>
+    <string name="edit_hook_config_title">Edit Hook Configuration</string>
+
+    <string name="hook_method_type_format">Hook Method: %1$s</string>
+    <string name="class_name_format">Class Name: %1$s</string>
+    <string name="method_names_format">Method Names: %1$s</string>
+    <string name="parameter_types_format">Parameter Types: %1$s</string>
+    <string name="return_value_format">Return Value: %1$s</string>
+    <string name="field_name_format">Field Name: %1$s</string>
+    <string name="field_value_format">Field Value: %1$s</string>
+    <string name="search_strings_format">Search Strings: %1$s</string>
+
+    <string name="hint_hook_method_type">Hook Method Type</string>
+    <string name="hint_class_name">Class Name</string>
+    <string name="hint_method_names">Method Names (comma-separated)</string>
+    <string name="hint_parameter_types">Parameter Types (full class name or primitive, comma-separated)</string>
+    <string name="hint_return_value">Return Value (true/false/null/number/string)</string>
+    <string name="hint_field_name">Field Name</string>
+    <string name="hint_field_value">Field Value (true/false/null/number/string)</string>
+    <string name="hint_search_strings">Search Strings (comma-separated)</string>
+
+    <string name="parameter_replacements_format">Parameter Replacements: %s</string>
+    <string name="parameter_replacements_label">Parameter Value Replacements</string>
+    <string name="hint_replace_with_value">Replace with this value</string>
+
+    <string name="hook_point_after">After Method Execution</string>
+    <string name="hook_point_before">Before Method Execution</string>
+
+    <string name="auto_detect_from_clipboard">Auto-detect from clipboard</string>
+    <string name="clipboard_content_unrecognized">Clipboard content format unrecognized</string>
+
+    <string name="hint_hook_point">Hook Point</string>
+    <string-array name="hook_points_array">
+        <item>After Method Execution (after)</item>
+        <item>Before Method Execution (before)</item>
+    </string-array>
+    <string name="hook_point_format">Hook Point: %1$s</string>
+
+    <string name="error_class_name_empty">Class name cannot be empty</string>
+    <string name="error_method_name_empty">Method name cannot be empty</string>
+    <string name="error_parameter_types_empty">Parameter types cannot be empty</string>
+    <string name="error_field_name_empty">Field name cannot be empty</string>
+    <string name="error_search_strings_empty">Search strings cannot be empty</string>
+
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="enabled_format">Enabled Status: %s</string>
+    <string name="add_hook">Add Hook</string>
+    <string name="clear_all_hooks">Clear All Hooks</string>
+
+    <string name="fab_auto_detect_ads">Auto-Detect Ad SDKs</string>
+    <string name="dialog_auto_detect_ads_title">Detected Ad Initialization Methods</string>
+    <string name="import_selected_hooks_count">Imported %d hook rules.</string>
+    <string name="no_hook_selected">No hook configuration selected</string>
+
+    <string name="import_global_rules_title">Import Global Rules?</string>
+    <string name="import_global_rules_message">This configuration belongs to global Hook rules. Do you want to proceed with importing?</string>
+    <string name="import_to_global">Import</string>
+    <string name="imported_to_global_successfully">Global Hook rules imported successfully.</string>
+    <string name="imported_global_rules_app_specific_skipped">Global Hook rules imported. %d app-specific rules skipped as this is a global page.</string>
+    <string name="no_new_hooks_to_import">No application Hook rules to import.</string>
+    <string name="error_empty_or_invalid_json">JSON file is empty or invalid format.</string>
+    <string name="no_new_hooks_to_import_global">No global Hook rules to import.</string>
+    <string name="no_global_hooks_found_to_import">No global Hook rules found in configuration.</string>
+
+    <string name="others">Others</string>
+    <string name="about">About</string>
+    <string name="feedback">FeedBack</string>
+    <string name="cache_clean">Cache Clean</string>
+    <string name="select_all">Select All</string>
+    <string name="hide_icon">Hide Icon</string>
+    <string name="filter_disabled">Disabled</string>
+    <string name="sort_by_default">The default sorting method has been switched to</string>
+    <string name="about_view_source_code"><![CDATA[View source code at %1$s]]></string>
+    <string name="block">block</string>
+    <string name="copy">copy to clipboard</string>
+    <string name="clearAll">clear all</string>
+    <string name="block_list">Block List</string>
+    <string name="edit">edit</string>
+    <string name="settings_language">Language</string>
+    <string name="delete">Delete</string>
+    <string name="add">add</string>
+    <string name="info">Info</string>
+    <string name="android_version">Android Version</string>
+    <string name="sdk_level">SDK Level</string>
+    <string name="android_id">Android ID</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="sku">SKU</string>
+    <string name="build_type">Build Type</string>
+    <string name="finger_print">Finger Print</string>
+    <string name="support">Support</string>
+    <string name="join_telegram_channel"><![CDATA[Join %1$s Channel]]></string>
+    <string name="default_page">Default Page</string>
+    <string name="activated">Activated</string>
+    <string name="not_activated">Not activated</string>
+    <string name="connecting">Connecting…</string>
+    <string name="reconnecting">Reconnecting…</string>
+    <string name="service_reconnecting">Service reconnecting</string>
+    <string name="version_format">Version: %1$s(%2$d)</string>
+    <string name="export_empty_request_list">The request list is empty and cannot be exported</string>
+    <string name="export_failed">Export failed</string>
+    <string name="export_no_app_found">Cannot export file, no suitable application was found to create the file</string>
+    <string name="add_to_blocklist_success">Has been added to the blacklist in batches</string>
+    <string name="import_success">Import successful</string>
+    <string name="import_failed">Import failed</string>
+    <string name="export_success">Export successful</string>
+    <string name="crash_log">Crash log</string>
+    <string name="import_success_count">Successfully imported %1$d new rules.</string>
+    <string name="import_no_new_rules">Import successful. No new rules were found to add.</string>
+    <string name="clear_block_list_confirm">Are you sure you want to clear all blacklists? </string>
+    <string name="batch_remove_success">Batch removed from blacklist</string>
+    <string name="batch_copy_to_clipboard">Batch copied to clipboard</string>
+    <string name="add_rule">Add rule</string>
+    <string name="edit_rule">Edit rule</string>
+    <string name="value_empty_error">Value cannot be empty</string>
+    <string name="rule_exists">Rule already exists</string>
+    <string name="open_app_details_failed">Cannot open application details</string>
+    <string name="launch_app_failed">Open failed</string>
+    <string name="module_not_activated">The module has not been activated</string>
+    <string name="save_success">Save successfully</string>
+    <string name="apk_package_name">APK package name</string>
+    <string name="apk_size">APK size</string>
+    <string name="version_name">Version name</string>
+    <string name="version_code">Version number</string>
+    <string name="target_sdk">TargetSDK</string>
+    <string name="min_sdk">MinSDK</string>
+    <string name="install_time">Installation time</string>
+    <string name="update_time">Update time</string>
+    <string name="sort_by_app_name">Application name</string>
+    <string name="sort_by_app_size">App size</string>
+    <string name="sort_by_last_update">Last update time</string>
+    <string name="sort_by_install_date">Installation date</string>
+    <string name="sort_by_target_version">Target version</string>
+    <string name="filter_configured">Configured</string>
+    <string name="filter_recent_update">Recent update</string>
+    <string name="updated">Updated</string>
+    <string name="open">Open</string>
+    <string name="details">Details</string>
+    <string name="remove_from_blocklist">Remove blacklist</string>
+    <string name="add_to_blocklist">Add to blacklist</string>
+    <string name="copied_to_clipboard_single">Copied: %1$s</string>
+    <string name="copied_to_clipboard_batch">Batch copied to clipboard</string>
+    <string name="confirm_clear_cache_title">Are you sure you want to clear the cache? </string>
+    <string name="confirm_clear_cache_message">Current cache %1$s</string>
+    <string name="cache_cleared_recently">Just cleared</string>
+    <string name="invalid_file_format">The file format is invalid, please select a file ending with .rule</string>
+
+    <!-- Cloud Rule -->
+    <string name="cloud_rules">Cloud Rules</string>
+    <string name="cloud_rule_management">Cloud Rule Management</string>
+    <string name="update_all">Update All</string>
+    <string name="add_subscription">Add Subscription</string>
+    <string name="delete_subscription">Delete Subscription</string>
+    <string name="delete_subscription_confirm">Delete \"%1$s\"? Related rules will also be removed.</string>
+    <string name="rule_count">%1$d rules</string>
+    <string name="last_update_time">Last update: %1$s</string>
+    <string name="never_updated">Never updated</string>
+    <string name="interval_hours">Interval: %1$d hours</string>
+    <string name="select_update_interval">Select Update Interval</string>
+    <string name="updating">Updating...</string>
+    <string name="sync_success">✓ Synced</string>
+    <string name="sync_failed">✗ Failed</string>
+    <string name="pending_update">Pending</string>
+    <string name="update_success_new_rules">Updated: %1$d new rules added</string>
+    <string name="update_failed_msg">Update failed: %1$s</string>
+    <string name="all_update_success">All updated: %1$d new rules total</string>
+    <string name="all_update_partial">Updated: %1$d new, %2$d failed</string>
+    <string name="subscription_exists">Subscription URL already exists</string>
+    <string name="subscription_added">Subscription added, updating rules...</string>
+    <string name="subscription_deleted">Deleted: %1$s</string>
+    <string name="rule_name">Rule Name</string>
+    <string name="subscription_url">Subscription URL</string>
+    <string name="update_interval_hours">Update Interval (hours)</string>
+    <string name="add_subscription_title">Add Rule Subscription</string>
+    <string name="name_url_required">Name and URL cannot be empty</string>
+    <string name="invalid_url">Please enter a valid URL</string>
+    <string name="immediate_update">Update Now</string>
+</resources>
