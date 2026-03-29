@@ -43,6 +43,24 @@ class DataSource(context: Context) {
         }
     }
 
+    /**
+     * Optimized batch insert: deduplicates internally and uses chunked insertion
+     */
+    suspend fun addListUrlBatch(urls: List<Url>, batchSize: Int = 500) {
+        if (urls.isEmpty()) return
+
+        withContext(Dispatchers.IO) {
+            // Get existing rules for dedup
+            val existingSet = getAllUrls().map { "${it.type}|${it.url}" }.toSet()
+            val newUrls = urls.filter { "${it.type}|${it.url}" !in existingSet }
+
+            // Insert in chunks to avoid TransactionTooLargeException
+            newUrls.chunked(batchSize).forEach { chunk ->
+                urlDao.insertAll(chunk)
+            }
+        }
+    }
+
     suspend fun updateUrl(url: Url) {
         urlDao.update(url)
     }
@@ -63,6 +81,9 @@ class DataSource(context: Context) {
     fun getAllUrls(): List<Url> {
         return urlDao.findAllList()
     }
+
+    suspend fun getRuleCount(): Int =
+        withContext(Dispatchers.IO) { urlDao.countAll() }
 
     companion object {
         @Volatile

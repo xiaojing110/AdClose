@@ -2,9 +2,13 @@ package com.close.hook.ads
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.close.hook.ads.data.repository.RuleUpdateManager
 import com.close.hook.ads.preference.PrefManager
 import com.close.hook.ads.preference.PrefManager.darkTheme
 import com.close.hook.ads.manager.ServiceManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes
@@ -24,6 +28,15 @@ class CloseApplication : Application() {
         initAppCenter()
         AppCompatDelegate.setDefaultNightMode(darkTheme)
         applyLocale(PrefManager.language)
+
+        // Auto-update cloud rules on launch
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val updateManager = RuleUpdateManager.getInstance(this@CloseApplication)
+                updateManager.initDefaultSubscriptions()
+                updateManager.updateAllIfNeeded()
+            } catch (_: Exception) {}
+        }
     }
 
     private fun initAppCenter() {

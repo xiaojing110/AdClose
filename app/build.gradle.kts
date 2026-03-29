@@ -68,8 +68,20 @@ android {
         }
     }
 
+    packaging {
+        resources {
+            excludes += setOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt"
+            )
+        }
+    }
+
     defaultConfig {
-        applicationId = "com.close.hook.ads"
+        applicationId = "adclose_mod"
         minSdk = 26
         targetSdk = 36
         versionCode = calculateVersionCode()
@@ -189,4 +201,7 @@ dependencies {
     implementation(libs.appcenterAnalytics)
     implementation(libs.appcenterCrashes)
     implementation(libs.mpandroidchart)
+
+    // OkHttp for cloud rule fetching
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

@@ -267,4 +267,35 @@
     <string name="confirm_clear_cache_message">当前缓存 %1$s</string>
     <string name="cache_cleared_recently">刚刚清理</string>
     <string name="invalid_file_format">文件格式无效，请选择以 .rule 结尾的文件</string>
+
+    <!-- Cloud Rule -->
+    <string name="cloud_rules">云规则</string>
+    <string name="cloud_rule_management">云规则管理</string>
+    <string name="update_all">更新全部</string>
+    <string name="add_subscription">添加订阅</string>
+    <string name="delete_subscription">删除订阅</string>
+    <string name="delete_subscription_confirm">确定删除「%1$s」？相关规则也将被移除。</string>
+    <string name="rule_count">%1$d 条规则</string>
+    <string name="last_update_time">上次更新: %1$s</string>
+    <string name="never_updated">从未更新</string>
+    <string name="interval_hours">间隔: %1$d 小时</string>
+    <string name="select_update_interval">选择更新间隔</string>
+    <string name="updating">更新中...</string>
+    <string name="sync_success">✓ 已同步</string>
+    <string name="sync_failed">✗ 更新失败</string>
+    <string name="pending_update">待更新</string>
+    <string name="update_success_new_rules">更新成功: 新增 %1$d 条规则</string>
+    <string name="update_failed_msg">更新失败: %1$s</string>
+    <string name="all_update_success">全部更新完成: 共新增 %1$d 条规则</string>
+    <string name="all_update_partial">更新完成: 新增 %1$d 条, %2$d 个失败</string>
+    <string name="subscription_exists">该订阅链接已存在</string>
+    <string name="subscription_added">订阅添加成功，正在更新规则...</string>
+    <string name="subscription_deleted">已删除订阅: %1$s</string>
+    <string name="rule_name">规则名称</string>
+    <string name="subscription_url">订阅链接 (URL)</string>
+    <string name="update_interval_hours">更新间隔 (小时)</string>
+    <string name="add_subscription_title">添加规则订阅</string>
+    <string name="name_url_required">名称和链接不能为空</string>
+    <string name="invalid_url">请输入有效的URL</string>
+    <string name="immediate_update">立即更新</string>
 </resources>

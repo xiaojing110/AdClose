@@ -68,7 +68,7 @@ jobs:
           mkdir -p release
           cp -r app/build/outputs/apk/release/*.apk release/ 2>/dev/null || true
           cp -r app/build/outputs/mapping/ release/mapping/ 2>/dev/null || true
-          cd release && zip -r ../AdClose-${{ github.sha }}.zip . && cd ..
+          cd release && zip -r ../AdClose-Mod-${{ github.sha }}.zip . && cd ..
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
@@ -83,8 +83,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          name: AdClose-${{ github.sha }}
-          path: AdClose-${{ github.sha }}.zip
+          name: AdClose-Mod-${{ github.sha }}
+          path: AdClose-Mod-${{ github.sha }}.zip
           compression-level: 9
 
       - name: Create Release
@@ -92,7 +92,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            AdClose-${{ github.sha }}.zip
+            AdClose-Mod-${{ github.sha }}.zip
             app/build/outputs/apk/release/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
