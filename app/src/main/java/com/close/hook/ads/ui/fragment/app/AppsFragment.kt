@@ -25,6 +25,7 @@ import com.close.hook.ads.data.model.AppInfo
 import com.close.hook.ads.databinding.BottomDialogAppInfoBinding
 import com.close.hook.ads.databinding.BottomDialogSwitchesBinding
 import com.close.hook.ads.databinding.FragmentAppsBinding
+import com.close.hook.ads.manager.ActivationStatus
 import com.close.hook.ads.manager.ScopeManager
 import com.close.hook.ads.manager.ServiceManager
 import com.close.hook.ads.preference.HookPrefs
@@ -377,11 +378,12 @@ class AppsFragment : BaseFragment<FragmentAppsBinding>(), AppsAdapter.OnItemClic
             (parentFragment as? AppsPagerFragment)?.setHint(size)
     }
 
-    @SuppressLint("SetTextI1n")
+    @SuppressLint("SetTextI18n")
     override fun onItemClick(appInfo: AppInfo, icon: Drawable?) {
         KeyboardUtils.hideKeyboard(requireView())
 
-        if (!ServiceManager.isModuleActivated) {
+        val status = ServiceManager.activationStatus
+        if (status == ActivationStatus.DISCONNECTED || status == ActivationStatus.CONNECTING) {
             Toast.makeText(requireContext(), getString(R.string.module_not_activated), Toast.LENGTH_SHORT).show()
             return
         }
@@ -470,7 +472,7 @@ class AppsFragment : BaseFragment<FragmentAppsBinding>(), AppsAdapter.OnItemClic
             .show()
     }
 
-    @SuppressLint("SetText18n")
+    @SuppressLint("SetTextI18n")
     override fun onItemLongClick(appInfo: AppInfo, icon: Drawable?) {
         KeyboardUtils.hideKeyboard(requireView())
         

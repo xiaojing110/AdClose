@@ -13,72 +13,106 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.close.hook.ads.BuildConfig
 import com.close.hook.ads.R
 import com.close.hook.ads.databinding.FragmentHomeBinding
 import com.close.hook.ads.debug.PerformanceActivity
+import com.close.hook.ads.manager.ActivationStatus
 import com.close.hook.ads.manager.ServiceManager
 import com.close.hook.ads.ui.activity.AboutActivity
 import com.close.hook.ads.ui.fragment.base.BaseFragment
 import com.close.hook.ads.util.resolveColorAttr
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolBar()
-        initInfo()
+        setSystemInfo()
+        setHyperLinks()
+        observeActivationStatus()
     }
 
-    @SuppressLint("SetTextI1n", "HardwareIds")
-    private fun initInfo() {
-        val context = requireContext()
-        val isActivated = ServiceManager.isModuleActivated
-
-        val colorAttr = if (isActivated) {
-            android.R.attr.colorPrimary
-        } else {
-            android.R.attr.colorError
+    private fun observeActivationStatus() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+                ServiceManager.connectionState
+                    .map { ServiceManager.activationStatus }
+                    .distinctUntilChanged()
+                    .collectLatest { status ->
+                        updateStatusUI(status)
+                    }
+            }
         }
-        val primaryOrErrorColor = context.resolveColorAttr(colorAttr)
+    }
+
+    private fun updateStatusUI(status: ActivationStatus) {
+        val context = requireContext()
+
+        val (colorAttr, iconRes, titleText, summaryExtra) = when (status) {
+            ActivationStatus.ACTIVE -> {
+                val color = context.resolveColorAttr(android.R.attr.colorPrimary)
+                Quadruple(color, R.drawable.ic_round_check_circle_24,
+                    getString(R.string.activated), null)
+            }
+            ActivationStatus.HOOKS_ACTIVE_RECONNECTING -> {
+                val color = context.resolveColorAttr(android.R.attr.colorPrimary)
+                Quadruple(color, R.drawable.ic_round_check_circle_24,
+                    getString(R.string.activated),
+                    getString(R.string.service_reconnecting))
+            }
+            ActivationStatus.CONNECTING -> {
+                val color = context.resolveColorAttr(com.google.android.material.R.attr.colorSurfaceVariant)
+                Quadruple(color, R.drawable.ic_about,
+                    getString(R.string.connecting), null)
+            }
+            ActivationStatus.RECONNECTING -> {
+                val color = context.resolveColorAttr(android.R.attr.colorError)
+                Quadruple(color, R.drawable.ic_about,
+                    getString(R.string.reconnecting), null)
+            }
+            ActivationStatus.DISCONNECTED -> {
+                val color = context.resolveColorAttr(android.R.attr.colorError)
+                Quadruple(color, R.drawable.ic_about,
+                    getString(R.string.not_activated), null)
+            }
+        }
 
         binding.apply {
-            status.setCardBackgroundColor(primaryOrErrorColor)
-            statusIcon.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    if (isActivated) R.drawable.ic_round_check_circle_24 else R.drawable.ic_about
-                )
-            )
-            statusTitle.text = getString(if (isActivated) R.string.activated else R.string.not_activated)
-            statusSummary.text = getString(R.string.version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
-
-            setSystemInfo(context)
-            setHyperLinks()
+            status.setCardBackgroundColor(colorAttr)
+            statusIcon.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+            statusTitle.text = titleText
+            statusSummary.text = buildString {
+                append(getString(R.string.version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
+                summaryExtra?.let { append(" · $it") }
+            }
         }
     }
 
-    private fun setSystemInfo(context: Context) {
+    @SuppressLint("SetTextI18n")
+    private fun setSystemInfo() {
+        val context = requireContext()
         val contentResolver = context.contentResolver
 
         binding.apply {
             androidVersionValue.text = Build.VERSION.RELEASE
             sdkVersionValue.text = Build.VERSION.SDK_INT.toString()
-
             androidIdValue.text = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
-
             brandValue.text = Build.MANUFACTURER
             modelValue.text = Build.MODEL
-
             skuValue.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Build.SKU else ""
-
-            typeValue.text = when {
-                Build.TYPE == "user" -> "Release"
-                Build.TYPE == "userdebug" -> "Debug"
-                Build.TYPE == "eng" -> "Engineering"
+            typeValue.text = when (Build.TYPE) {
+                "user" -> "Release"
+                "userdebug" -> "Debug"
+                "eng" -> "Engineering"
                 else -> Build.TYPE
             }
-
             fingerValue.text = Build.FINGERPRINT
         }
     }
@@ -126,3 +160,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 }
+
+private data class Quadruple<A, B, C, D>(val first: A, val second: B, val third: C, val fourth: D)
