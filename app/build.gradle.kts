@@ -59,10 +59,11 @@ android {
 
     signingConfigs {
         create("keyStore") {
-            storeFile = file("AdClose.jks")
-            keyAlias = "AdClose"
-            keyPassword = "rikkati"
-            storePassword = "rikkati"
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "AdClose.jks"
+            storeFile = file(keystorePath)
+            keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
+            keyPassword = System.getenv("KEY_PASSWORD") ?: "rikkati"
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "rikkati"
             enableV2Signing = true
             enableV3Signing = true
         }
