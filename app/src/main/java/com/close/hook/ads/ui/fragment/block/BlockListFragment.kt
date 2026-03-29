@@ -334,13 +334,6 @@ class BlockListFragment : BaseFragment<FragmentBlockListBinding>(), OnBackPressL
                 restoreSAFLauncher.launch(arrayOf("application/octet-stream", "text/plain"))
             }
 
-<<<<<<< HEAD
-            cloudRules.setOnClickListener {
-                startActivity(android.content.Intent(requireContext(), com.close.hook.ads.ui.activity.CloudRuleActivity::class.java))
-            }
-
-=======
->>>>>>> parent of ddb561f (增加云更新)
             clear.setOnClickListener {
                 editText.text = null
             }

@@ -1,4 +1,4 @@
-name: Build Android
+name: main
 
 on:
   workflow_dispatch:
@@ -7,6 +7,7 @@ on:
     paths-ignore:
       - '**.md'
       - '**.txt'
+      - '.github/**'
       - '.idea/**'
       - '!.github/workflows/**'
 
@@ -28,65 +29,70 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Cache Gradle Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            !~/.gradle/caches/build-cache-*
+          key: gradle-deps-core-${{ hashFiles('**/build.gradle.kts', '**/build.gradle', '**/libs.versions.toml') }}
+          restore-keys: |
+            gradle-deps
 
-      - name: Install SDK components
+      - name: Cache Gradle Build
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches/build-cache-*
+            ~/.gradle/buildOutputCleanup/cache.properties
+          key: gradle-builds-core-${{ github.sha }}
+          restore-keys: |
+            gradle-builds
+
+      - name: Grant execute permission for Gradle wrapper
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
         run: |
-          sdkmanager --install \
-            "platforms;android-36" \
-            "build-tools;36.0.0" \
-            "ndk;28.2.13676358" \
-            "cmake;3.22.1"
+          echo ${{ secrets.SIGN_KEYSTORE_BASE64 }} | base64 -d > keystore.jks
+          ./gradlew :app:assembleRelease
+        env:
+          KEYSTORE_PATH: "../keystore.jks"
+          KEYSTORE_PASSWORD: ${{ secrets.SIGN_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.SIGN_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.SIGN_KEY_PASSWORD }}
 
-      - name: Grant execute permission
-        run: chmod +x ./gradlew
-
-      - name: Build debug APK
-        run: ./gradlew :app:assembleDebug --no-daemon
-
-      - name: Package release zip
+      - name: Prepare Release Package
         run: |
           mkdir -p release
-<<<<<<< HEAD
-          cp app/build/outputs/apk/debug/*.apk release/ 2>/dev/null || true
-          cd release && zip -r ../AdClose.zip . && cd ..
-=======
           cp -r app/build/outputs/apk/release/*.apk release/ 2>/dev/null || true
           cp -r app/build/outputs/mapping/ release/mapping/ 2>/dev/null || true
           cd release && zip -r ../AdClose-${{ github.sha }}.zip . && cd ..
->>>>>>> parent of ddb561f (增加云更新)
 
-      - name: Upload APK
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'pull_request' }}
         with:
-          name: AdClose-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: build_output_${{ github.sha }}
+          path: |
+            app/build/outputs/**
+          compression-level: 9
 
-      - name: Upload ZIP
+      - name: Upload Release ZIP
         uses: actions/upload-artifact@v4
+        if: ${{ github.event_name != 'pull_request' }}
         with:
-<<<<<<< HEAD
-          name: AdClose-zip
-          path: AdClose.zip
-=======
           name: AdClose-${{ github.sha }}
           path: AdClose-${{ github.sha }}.zip
           compression-level: 9
->>>>>>> parent of ddb561f (增加云更新)
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-<<<<<<< HEAD
-            AdClose.zip
-            app/build/outputs/apk/debug/*.apk
-          generate_release_notes: true
-=======
             AdClose-${{ github.sha }}.zip
             app/build/outputs/apk/release/*.apk
->>>>>>> parent of ddb561f (增加云更新)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

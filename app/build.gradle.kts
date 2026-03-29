@@ -66,42 +66,10 @@ android {
             enableV2Signing = true
             enableV3Signing = true
         }
-        // CI signing from env vars
-        if (System.getenv("KEYSTORE_PATH") != null) {
-            create("ciKeyStore") {
-                storeFile = file(System.getenv("KEYSTORE_PATH")!!)
-                keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
-                keyPassword = System.getenv("KEY_PASSWORD") ?: ""
-                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-                enableV2Signing = true
-                enableV3Signing = true
-            }
-        }
     }
 
-<<<<<<< HEAD
-    val hasSigning = System.getenv("KEYSTORE_PATH") != null ||
-            (file("AdClose.jks").exists() && System.getenv("CI") == null)
-    val signingConfigName = if (System.getenv("KEYSTORE_PATH") != null) "ciKeyStore" else "keyStore"
-
-    packaging {
-        resources {
-            excludes += setOf(
-                "META-INF/DEPENDENCIES",
-                "META-INF/LICENSE",
-                "META-INF/LICENSE.txt",
-                "META-INF/NOTICE",
-                "META-INF/NOTICE.txt"
-            )
-        }
-    }
-
-    defaultConfig {
-        applicationId = "com.adclose.mod"
-=======
     defaultConfig {
         applicationId = "com.close.hook.ads"
->>>>>>> parent of ddb561f (增加云更新)
         minSdk = 26
         targetSdk = 36
         versionCode = calculateVersionCode()
@@ -142,10 +110,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (hasSigning) {
-                signingConfig = signingConfigs.getByName(signingConfigName)
-            }
-
+            signingConfig = signingConfigs.getByName("keyStore")
+            
             externalNativeBuild {
                 cmake {
                     cppFlags.add("-DDEBUG=0")
@@ -154,10 +120,8 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
-            if (hasSigning) {
-                signingConfig = signingConfigs.getByName(signingConfigName)
-            }
-
+            signingConfig = signingConfigs.getByName("keyStore")
+            
             externalNativeBuild {
                 cmake {
                     cppFlags.add("-DDEBUG=1")
