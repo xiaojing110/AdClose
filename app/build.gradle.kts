@@ -81,7 +81,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "adclose_mod"
+        applicationId = "com.adclose.mod"
         minSdk = 26
         targetSdk = 36
         versionCode = calculateVersionCode()
