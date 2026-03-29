@@ -84,14 +84,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             }
         }
 
-        binding.apply {
-            status.setCardBackgroundColor(colorAttr)
-            statusIcon.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
-            statusTitle.text = titleText
-            statusSummary.text = buildString {
-                append(getString(R.string.version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
-                summaryExtra?.let { append(" · $it") }
-            }
+        val statusCard = requireView().findViewById<com.google.android.material.card.MaterialCardView>(R.id.status)
+        statusCard.setCardBackgroundColor(colorAttr)
+        binding.statusIcon.setImageDrawable(ContextCompat.getDrawable(context, iconRes))
+        binding.statusTitle.text = titleText
+        binding.statusSummary.text = buildString {
+            append(getString(R.string.version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE))
+            summaryExtra?.let { append(" · $it") }
         }
     }
 

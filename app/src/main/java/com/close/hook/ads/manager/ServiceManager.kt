@@ -85,17 +85,15 @@ object ServiceManager {
             }
 
             override fun onServiceDied(deadService: XposedService) {
-                val wasConnected: Boolean
                 _connectionState.update { currentState ->
-                    wasConnected = currentState is ConnectionState.Connected && currentState.service === deadService
-                    if (wasConnected) {
+                    if (currentState is ConnectionState.Connected && currentState.service === deadService) {
                         Log.w(TAG, "LSPosed service (${deadService.frameworkName}) died. Hooks remain active.")
+                        scheduleReconnect()
                         ConnectionState.ServiceDied(deadService.frameworkName)
                     } else {
                         currentState
                     }
                 }
-                scheduleReconnect()
             }
         }
 
