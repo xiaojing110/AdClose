@@ -66,23 +66,22 @@ android {
             enableV2Signing = true
             enableV3Signing = true
         }
+        // CI signing from env vars
+        if (System.getenv("KEYSTORE_PATH") != null) {
+            create("ciKeyStore") {
+                storeFile = file(System.getenv("KEYSTORE_PATH")!!)
+                keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
+                keyPassword = System.getenv("KEY_PASSWORD") ?: ""
+                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+                enableV2Signing = true
+                enableV3Signing = true
+            }
+        }
     }
 
-    // Resolve signing config: use env vars when set, bundled keystore locally, skip on CI
-    val resolvedSigningConfig: SigningConfig? = if (System.getenv("KEYSTORE_PATH") != null) {
-        signingConfigs.create("ciKeyStore") {
-            storeFile = file(System.getenv("KEYSTORE_PATH"))
-            keyAlias = System.getenv("KEY_ALIAS") ?: "AdClose"
-            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
-            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
-            enableV2Signing = true
-            enableV3Signing = true
-        }
-    } else if (file("AdClose.jks").exists() && System.getenv("CI") == null) {
-        signingConfigs.getByName("keyStore")
-    } else {
-        null
-    }
+    val hasSigning = System.getenv("KEYSTORE_PATH") != null ||
+            (file("AdClose.jks").exists() && System.getenv("CI") == null)
+    val signingConfigName = if (System.getenv("KEYSTORE_PATH") != null) "ciKeyStore" else "keyStore"
 
     packaging {
         resources {
@@ -138,8 +137,8 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            if (resolvedSigningConfig != null) {
-                signingConfig = resolvedSigningConfig
+            if (hasSigning) {
+                signingConfig = signingConfigs.getByName(signingConfigName)
             }
 
             externalNativeBuild {
@@ -150,8 +149,8 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
-            if (resolvedSigningConfig != null) {
-                signingConfig = resolvedSigningConfig
+            if (hasSigning) {
+                signingConfig = signingConfigs.getByName(signingConfigName)
             }
 
             externalNativeBuild {
