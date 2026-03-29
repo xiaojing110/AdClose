@@ -273,35 +273,4 @@
     <string name="confirm_clear_cache_message">Current cache %1$s</string>
     <string name="cache_cleared_recently">Just cleared</string>
     <string name="invalid_file_format">The file format is invalid, please select a file ending with .rule</string>
-
-    <!-- Cloud Rule -->
-    <string name="cloud_rules">Cloud Rules</string>
-    <string name="cloud_rule_management">Cloud Rule Management</string>
-    <string name="update_all">Update All</string>
-    <string name="add_subscription">Add Subscription</string>
-    <string name="delete_subscription">Delete Subscription</string>
-    <string name="delete_subscription_confirm">Delete \"%1$s\"? Related rules will also be removed.</string>
-    <string name="rule_count">%1$d rules</string>
-    <string name="last_update_time">Last update: %1$s</string>
-    <string name="never_updated">Never updated</string>
-    <string name="interval_hours">Interval: %1$d hours</string>
-    <string name="select_update_interval">Select Update Interval</string>
-    <string name="updating">Updating...</string>
-    <string name="sync_success">✓ Synced</string>
-    <string name="sync_failed">✗ Failed</string>
-    <string name="pending_update">Pending</string>
-    <string name="update_success_new_rules">Updated: %1$d new rules added</string>
-    <string name="update_failed_msg">Update failed: %1$s</string>
-    <string name="all_update_success">All updated: %1$d new rules total</string>
-    <string name="all_update_partial">Updated: %1$d new, %2$d failed</string>
-    <string name="subscription_exists">Subscription URL already exists</string>
-    <string name="subscription_added">Subscription added, updating rules...</string>
-    <string name="subscription_deleted">Deleted: %1$s</string>
-    <string name="rule_name">Rule Name</string>
-    <string name="subscription_url">Subscription URL</string>
-    <string name="update_interval_hours">Update Interval (hours)</string>
-    <string name="add_subscription_title">Add Rule Subscription</string>
-    <string name="name_url_required">Name and URL cannot be empty</string>
-    <string name="invalid_url">Please enter a valid URL</string>
-    <string name="immediate_update">Update Now</string>
 </resources>

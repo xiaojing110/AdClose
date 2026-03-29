@@ -67,7 +67,4 @@ interface UrlDao {
 
     @Query("DELETE FROM url_info")
     fun deleteAll(): Int
-
-    @Query("SELECT COUNT(*) FROM url_info")
-    fun countAll(): Int
 }

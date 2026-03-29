@@ -79,6 +79,7 @@ android {
         }
     }
 
+<<<<<<< HEAD
     val hasSigning = System.getenv("KEYSTORE_PATH") != null ||
             (file("AdClose.jks").exists() && System.getenv("CI") == null)
     val signingConfigName = if (System.getenv("KEYSTORE_PATH") != null) "ciKeyStore" else "keyStore"
@@ -97,6 +98,10 @@ android {
 
     defaultConfig {
         applicationId = "com.adclose.mod"
+=======
+    defaultConfig {
+        applicationId = "com.close.hook.ads"
+>>>>>>> parent of ddb561f (增加云更新)
         minSdk = 26
         targetSdk = 36
         versionCode = calculateVersionCode()
@@ -220,7 +225,4 @@ dependencies {
     implementation(libs.appcenterAnalytics)
     implementation(libs.appcenterCrashes)
     implementation(libs.mpandroidchart)
-
-    // OkHttp for cloud rule fetching
-    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

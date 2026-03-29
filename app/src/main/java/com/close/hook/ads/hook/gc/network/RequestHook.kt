@@ -67,49 +67,13 @@ object RequestHook {
         .build()
 
     private val queryCache: Cache<String, Triple<Boolean, String?, String?>> = CacheBuilder.newBuilder()
-        .maximumSize(5000)
-        .expireAfterWrite(30, TimeUnit.MINUTES)
+        .maximumSize(1000)
+        .expireAfterAccess(4, TimeUnit.HOURS)
         .softValues()
         .build()
 
-    // Preloaded domain set for fast in-memory matching
-    private val domainBlockSet: MutableSet<String> = java.util.concurrent.ConcurrentHashMap.newKeySet()
-    private val keywordBlockList: MutableList<String> = java.util.concurrent.CopyOnWriteArrayList()
-    private var rulesPreloaded = false
-
     fun init(context: Context) {
         applicationContext = context
-        preloadRules()
-    }
-
-    /**
-     * Preload domain rules into memory for fast O(1) lookups.
-     * This bypasses ContentProvider IPC for the most common case.
-     */
-    private fun preloadRules() {
-        if (rulesPreloaded) return
-        try {
-            applicationContext.contentResolver.query(
-                URL_CONTENT_URI,
-                arrayOf(Url.URL_TYPE, Url.URL_ADDRESS),
-                null, null, null
-            )?.use { cursor ->
-                val typeIdx = cursor.getColumnIndexOrThrow(Url.URL_TYPE)
-                val addrIdx = cursor.getColumnIndexOrThrow(Url.URL_ADDRESS)
-                while (cursor.moveToNext()) {
-                    val type = cursor.getString(typeIdx)
-                    val addr = cursor.getString(addrIdx)
-                    when (type) {
-                        "Domain" -> domainBlockSet.add(addr)
-                        "KeyWord" -> keywordBlockList.add(addr)
-                    }
-                }
-            }
-            rulesPreloaded = true
-            XposedBridge.log("$LOG_PREFIX Preloaded ${domainBlockSet.size} domains, ${keywordBlockList.size} keywords")
-        } catch (e: Exception) {
-            XposedBridge.log("$LOG_PREFIX Rule preload failed: ${e.message}")
-        }
     }
 
     internal fun formatUrlWithoutQuery(urlObject: Any?): String {
@@ -139,34 +103,8 @@ object RequestHook {
 
     internal fun checkShouldBlockRequest(info: BlockedRequest?): Boolean {
         info ?: return false
-
-        // Fast path: check preloaded domain set first (no IPC needed)
-        if (rulesPreloaded && domainBlockSet.isNotEmpty()) {
-            val host = AppUtils.extractHostOrSelf(info.requestValue)
-            if (host.isNotEmpty() && domainBlockSet.contains(host)) {
-                val result = Triple(true, "Domain", host)
-                sendBroadcast(info, true, result.second, result.third)
-                return true
-            }
-        }
-
-        // Fast path: check preloaded keywords
-        if (rulesPreloaded && keywordBlockList.isNotEmpty()) {
-            for (kw in keywordBlockList) {
-                if (info.requestValue.contains(kw)) {
-                    val result = Triple(true, "KeyWord", kw)
-                    sendBroadcast(info, true, result.second, result.third)
-                    return true
-                }
-            }
-        }
-
-        // Fallback: full ContentProvider query (for URL rules and cache misses)
         val blockResult = sequenceOf("URL", "Domain", "KeyWord")
             .mapNotNull { type ->
-                // Skip Domain/KeyWord if already checked via preload
-                if (type == "Domain" && rulesPreloaded && domainBlockSet.isNotEmpty()) return@mapNotNull null
-                if (type == "KeyWord" && rulesPreloaded && keywordBlockList.isNotEmpty()) return@mapNotNull null
                 val value = if (type == "Domain") AppUtils.extractHostOrSelf(info.requestValue) else info.requestValue
                 val result = queryContentProvider(type, value)
                 if (result.first) result else null
